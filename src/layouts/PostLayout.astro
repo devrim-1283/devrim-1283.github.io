@@ -1,0 +1,51 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    date?: string;
+    tags?: string[];
+    referenceLabel?: string;
+    referenceUrl?: string;
+    lang?: 'tr' | 'en';
+  };
+}
+
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang ?? 'tr';
+const refLabel = frontmatter.referenceLabel ?? (lang === 'en'
+  ? 'Read the full service page on donedynamics.com'
+  : 'donedynamics.com üzerindeki ilgili hizmet sayfasını oku');
+const refUrl = frontmatter.referenceUrl ?? (lang === 'en' ? 'https://donedynamics.com/en' : 'https://donedynamics.com');
+const dateLabel = frontmatter.date
+  ? new Date(frontmatter.date).toLocaleDateString(lang === 'en' ? 'en-US' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null;
+---
+<Layout
+  title={`${frontmatter.title} · Done Dynamics Eng`}
+  description={frontmatter.description}
+  lang={lang}
+  type="article"
+  publishedAt={frontmatter.date}
+  tags={frontmatter.tags}
+>
+  <article class="prose-post">
+    <div class="mb-6 flex flex-wrap items-center gap-3 text-xs text-ink-400">
+      {dateLabel && <span>{dateLabel}</span>}
+      {frontmatter.tags?.map((t) => <span class="rounded-full border border-ink-200 px-2 py-0.5">#{t}</span>)}
+    </div>
+    <slot />
+    <aside class="mt-16 rounded-2xl border border-ink-200 bg-white p-6">
+      <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
+        {lang === 'en' ? 'Reference' : 'Referans'}
+      </p>
+      <p class="mt-2">
+        <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href={refUrl}>
+          {refLabel} →
+        </a>
+      </p>
+    </aside>
+  </article>
+</Layout>

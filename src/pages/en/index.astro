@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+const posts = (await getCollection('en-posts')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+<Layout
+  title="Done Dynamics Engineering — field notes"
+  description="Engineering notes from Done Dynamics, a corporate software company in Alanya TEKMER, Türkiye. Architecture decisions, code samples, production benchmarks."
+  lang="en"
+>
+  <section class="mb-12">
+    <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">Done Dynamics · Engineering</p>
+    <h1 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-ink-900">
+      Architecture decisions, code samples, real-world benchmarks.
+    </h1>
+    <p class="mt-4 text-base text-ink-600">
+      A field-notes blog from the engineering team at
+      <a class="text-accent underline" href="https://donedynamics.com/en">donedynamics.com</a>.
+      Each post follows: problem → architecture → code → benchmark → diagram → conclusion → reference.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold text-ink-900">Posts</h2>
+    <ul class="mt-6 divide-y divide-ink-200 border-y border-ink-200">
+      {posts.map((p) => (
+        <li class="py-5">
+          <a href={`/en/posts/${p.slug}/`} class="group block">
+            <div class="flex flex-wrap items-center gap-2 text-xs text-ink-400">
+              <span>{new Date(p.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}</span>
+              {p.data.tags.map((t) => <span class="rounded-full border border-ink-200 px-2 py-0.5">#{t}</span>)}
+            </div>
+            <h3 class="mt-1 text-lg font-semibold text-ink-900 group-hover:text-accent">{p.data.title}</h3>
+            <p class="mt-1 text-sm text-ink-600">{p.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

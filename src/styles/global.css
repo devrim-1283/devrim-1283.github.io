@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+}
+
+@layer components {
+  .container-page { @apply mx-auto max-w-3xl px-5 sm:px-6; }
+  .prose-post {
+    @apply text-ink-700 leading-relaxed;
+  }
+  .prose-post h1 {
+    @apply mt-0 mb-4 text-4xl sm:text-5xl font-semibold tracking-tight text-ink-900;
+  }
+  .prose-post h2 {
+    @apply mt-12 mb-3 text-2xl font-semibold text-ink-900;
+  }
+  .prose-post h3 { @apply mt-8 mb-2 text-lg font-semibold text-ink-900; }
+  .prose-post p { @apply my-4; }
+  .prose-post a { @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent; }
+  .prose-post strong { @apply text-ink-900 font-semibold; }
+  .prose-post ul { @apply my-4 list-disc pl-6 space-y-1; }
+  .prose-post ol { @apply my-4 list-decimal pl-6 space-y-1; }
+  .prose-post code:not(pre code) {
+    @apply rounded bg-ink-100 px-1.5 py-0.5 text-[0.9em] font-mono text-ink-900;
+  }
+  .prose-post pre {
+    @apply my-6 overflow-x-auto rounded-xl border border-ink-200 p-4 text-sm;
+  }
+  .prose-post blockquote {
+    @apply my-6 border-l-4 border-accent/40 bg-white px-4 py-3 text-ink-700;
+  }
+  .prose-post table {
+    @apply my-6 w-full border-collapse text-sm;
+  }
+  .prose-post table th, .prose-post table td {
+    @apply border border-ink-200 px-3 py-2 text-left;
+  }
+  .prose-post table th { @apply bg-ink-100 font-semibold; }
+}

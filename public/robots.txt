@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devrim-1283.github.io/sitemap.xml

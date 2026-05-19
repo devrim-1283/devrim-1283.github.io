@@ -1,0 +1,75 @@
+---
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: 'tr' | 'en';
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedAt?: string;
+  tags?: string[];
+}
+
+const {
+  title,
+  description = 'Done Dynamics — kurumsal yazılım şirketi mühendislik notları.',
+  lang = 'tr',
+  canonical,
+  type = 'website',
+  publishedAt,
+  tags = [],
+} = Astro.props;
+
+const site = 'https://devrim-1283.github.io';
+const url = canonical ?? site + Astro.url.pathname;
+const mainSite = 'https://donedynamics.com';
+const mainUrl = lang === 'en' ? `${mainSite}/en` : mainSite;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:site_name" content="Done Dynamics Engineering" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt} />}
+    {tags.map((t) => <meta property="article:tag" content={t} />)}
+    <link rel="alternate" type="application/rss+xml" title="Done Dynamics Engineering" href="/rss.xml" />
+  </head>
+  <body>
+    <header class="border-b border-ink-200 bg-white">
+      <div class="container-page flex items-center justify-between py-5">
+        <a href={lang === 'en' ? '/en/' : '/'} class="font-semibold tracking-tight text-ink-900">
+          Done Dynamics <span class="text-ink-400">/ eng</span>
+        </a>
+        <nav class="flex items-center gap-5 text-sm">
+          <a href={lang === 'en' ? '/en/' : '/'} class="text-ink-600 hover:text-ink-900">{lang === 'en' ? 'Posts' : 'Yazılar'}</a>
+          <a href={mainUrl} class="text-accent hover:underline">donedynamics.com →</a>
+          <a href={lang === 'en' ? '/' : '/en/'} class="text-ink-400 hover:text-ink-900">{lang === 'en' ? 'TR' : 'EN'}</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container-page py-12 sm:py-16">
+      <slot />
+    </main>
+    <footer class="border-t border-ink-200 bg-white mt-16">
+      <div class="container-page py-10 text-sm text-ink-600">
+        <p>
+          {lang === 'en' ? 'Engineering notes from ' : 'Mühendislik notları — '}
+          <a class="text-accent hover:underline" href={mainUrl}>Done Dynamics</a>
+          {lang === 'en' ? ', a corporate software company based in Alanya TEKMER, Türkiye.' : ', Alanya TEKMER bünyesinde kurumsal yazılım şirketi.'}
+        </p>
+        <p class="mt-2 text-ink-400">© {new Date().getFullYear()} Done Dynamics. Source on <a class="underline" href="https://github.com/devrim-1283/devrim-1283.github.io">GitHub</a>.</p>
+      </div>
+    </footer>
+  </body>
+</html>
