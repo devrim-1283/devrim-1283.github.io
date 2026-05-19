@@ -61,14 +61,93 @@ const mainUrl = lang === 'en' ? `${mainSite}/en` : mainSite;
     <main class="container-page py-12 sm:py-16">
       <slot />
     </main>
-    <footer class="border-t border-ink-200 bg-white mt-16">
+
+    <section aria-label={lang === 'en' ? 'About Done Dynamics' : 'Done Dynamics hakkında'} class="border-t border-ink-200 bg-white">
+      <div class="container-page py-14 sm:py-16">
+        <p class="text-xs font-semibold uppercase tracking-wider text-ink-400">
+          {lang === 'en' ? 'About the engineering team' : 'Mühendislik ekibi hakkında'}
+        </p>
+        <h2 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-ink-900">
+          {lang === 'en'
+            ? 'Done Dynamics — enterprise software engineering, delivered end to end.'
+            : 'Done Dynamics — uçtan uca teslim edilen kurumsal yazılım mühendisliği.'}
+        </h2>
+        {lang === 'en' ? (
+          <div class="mt-5 space-y-4 text-sm sm:text-base leading-relaxed text-ink-700">
+            <p>
+              The notes published here are written by the engineering team at
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en"> Done Dynamics</a>,
+              an Alanya TEKMER-based enterprise software company serving customers across Türkiye, the EU and MENA.
+              Our delivery practice covers
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/solutions/web-development"> enterprise web application development</a>,
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/solutions/mobile-development"> iOS and Android mobile app development</a>,
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/solutions/custom-applications"> custom business applications</a>
+              and
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/solutions/backup-storage"> KVKK / GDPR-compliant backup and S3-compatible storage</a>.
+            </p>
+            <p>
+              Mobile is a first-class delivery line — not an afterthought. We design Flutter and native iOS / Android applications with
+              offline resilience, push notifications, App Store and Google Play release management,
+              and continuous monitoring as part of the contract. The same engineering team that ships the web
+              tier also owns the mobile build and release pipeline.
+            </p>
+            <p>
+              Read more about our company on the
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/company"> Done Dynamics corporate page</a>,
+              browse the
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/product/nextcloud"> self-hosted Nextcloud workspace offering</a>,
+              or
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/en/contact"> request a scoping call</a>.
+            </p>
+          </div>
+        ) : (
+          <div class="mt-5 space-y-4 text-sm sm:text-base leading-relaxed text-ink-700">
+            <p>
+              Burada yayımlanan teknik notlar,
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com"> Done Dynamics</a>
+              mühendislik ekibi tarafından yazılır. Done Dynamics, Alanya TEKMER bünyesinde kurulmuş bir
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/company"> kurumsal yazılım şirketi</a>
+              olarak Türkiye genelinde
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/solutions/web-development"> kurumsal web sitesi ve B2B portal geliştirme</a>,
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/solutions/mobile-development"> iOS ve Android mobil uygulama geliştirme</a>,
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/solutions/custom-applications"> ihtiyaca özel kurumsal yazılım</a>
+              ve
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/solutions/backup-storage"> KVKK uyumlu yedekleme ve S3 uyumlu depolama</a>
+              hizmetleri sunar.
+            </p>
+            <p>
+              <strong>Mobil uygulama geliştirme</strong> tarafında <strong>Flutter</strong> ile tek kod tabanından
+              iOS ve Android için native performansta ürünler kuruyoruz; <strong>App Store yayın</strong>,
+              <strong>Google Play Console</strong> yönetimi, push bildirimleri, offline çalışma, kripto imzalama
+              ve sürüm yönetimini sözleşmeye dahil ediyoruz. Aynı ekip, web ve mobil tarafı tek bir
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/product"> ürün omurgası</a>
+              üzerinden teslim eder.
+            </p>
+            <p>
+              Bölgesel olarak
+              <strong> Alanya yazılım</strong>,
+              <strong> Antalya yazılım</strong> ve
+              <strong> İstanbul yazılım</strong>
+              projeleri ağırlıklı olsa da, tüm Türkiye'de ve yurt dışında uzaktan teslim modeliyle çalışıyoruz.
+              Kurumsal bir ihtiyacınız için kapsam çalışmasına başlamak isterseniz
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/contact"> iletişim sayfası</a>
+              üzerinden ulaşabilir ya da
+              <a class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent" href="https://donedynamics.com/product/nextcloud"> Nextcloud Kurumsal Dijital Çalışma Alanı</a>
+              ürünümüzü inceleyebilirsiniz.
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <footer class="border-t border-ink-200 bg-ink-50">
       <div class="container-page py-10 text-sm text-ink-600">
         <p>
-          {lang === 'en' ? 'Engineering notes from ' : 'Mühendislik notları — '}
+          {lang === 'en' ? 'Operated by ' : 'Yayıncı: '}
           <a class="text-accent hover:underline" href={mainUrl}>Done Dynamics</a>
-          {lang === 'en' ? ', a corporate software company based in Alanya TEKMER, Türkiye.' : ', Alanya TEKMER bünyesinde kurumsal yazılım şirketi.'}
+          {lang === 'en' ? ' · Alanya TEKMER, Türkiye.' : ' · Alanya TEKMER, Türkiye.'}
         </p>
-        <p class="mt-2 text-ink-400">© {new Date().getFullYear()} Done Dynamics. Source on <a class="underline" href="https://github.com/devrim-1283/devrim-1283.github.io">GitHub</a>.</p>
+        <p class="mt-2 text-ink-400">© {new Date().getFullYear()} Done Dynamics.</p>
       </div>
     </footer>
   </body>

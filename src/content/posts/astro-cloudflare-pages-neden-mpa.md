@@ -7,13 +7,13 @@ referenceLabel: "donedynamics.com — Web sitesi geliştirme"
 referenceUrl: "https://donedynamics.com/solutions/web-development"
 ---
 
-## Problem
+## Problem tanımı
 
 Kurumsal tanıtım sitelerinde tekrar tekrar aynı problemle karşılaşıyorduk: Next.js ile yazılmış statik bir tanıtım sitesi, hidrasyon JS'i yüzünden ilk INP ölçümünü 300ms'in üstüne taşıyor, mobil cihazda bundle boyutu 250kb+ JS'e çıkıyor ve müşteri "bu site neden bu kadar yavaş açılıyor" diye soruyor — oysa içerikte tek bir interaktif bileşen bile yok.
 
 Aradığımız şey: tanıtım sayfası kadar statik, ama küçük interaktif adacıklara (formlar, animasyonlar) izin veren bir framework. Sonuç: **Astro + Cloudflare Pages**.
 
-## Architecture
+## Mimari
 
 ```
 ┌─────────────────────────────────┐
@@ -36,7 +36,7 @@ Aradığımız şey: tanıtım sayfası kadar statik, ama küçük interaktif ad
 
 Astro varsayılan olarak MPA üretir; her sayfa kendi HTML'iyle gelir, JS yalnızca `client:*` direktifi ile işaretlenmiş bileşenler için yüklenir.
 
-## Code sample
+## Kod örneği
 
 ```astro
 ---
@@ -55,7 +55,7 @@ import ContactForm from '@/components/ContactForm.tsx';
 
 `client:visible` direktifi sayesinde form, viewport'a girene kadar hiçbir JS indirilmez. Tanıtım sayfasında ortalama JS payload `<10 KB` kalır.
 
-## Benchmark
+## Karşılaştırmalı ölçüm
 
 Aynı kurumsal tanıtım sitesi, üç farklı yığında ölçüldü (Lighthouse mobile, 4G throttling, Moto G Power):
 
@@ -67,7 +67,7 @@ Aynı kurumsal tanıtım sitesi, üç farklı yığında ölçüldü (Lighthouse
 
 Ek olarak Cloudflare Pages tarafında: aylık 50k pageview için Vercel Hobby planının üstüne çıkarken, Cloudflare Pages **ücretsiz** kalmaya devam ediyor.
 
-## Diagram
+## Akış şeması
 
 ```
 Request flow:
@@ -86,7 +86,7 @@ Request flow:
 
 Her PoP HTML'i cache'liyor; ilk byte gerçekten edge'den geliyor, orijinal sunucuya gitmiyor.
 
-## Conclusion
+## Sonuç
 
 Eğer projede:
 
@@ -96,4 +96,4 @@ Eğer projede:
 
 **Astro + Cloudflare Pages** bizim için Next.js'ten daha iyi bir varsayılan haline geldi. Next.js'i hâlâ dashboard, B2B portal ve kompleks state'li uygulamalarda kullanıyoruz — ama tanıtım sitesi artık otomatik olarak Astro.
 
-Aynı yığını müşteri projelerinde de uyguluyoruz. Detay için referans linkine bakabilirsin.
+Aynı kurumsal yığını müşteri projelerimizde de uyguluyoruz; ayrıntılı yöntem ve teslim modeli için aşağıdaki referans bağlantısına bakabilirsiniz.

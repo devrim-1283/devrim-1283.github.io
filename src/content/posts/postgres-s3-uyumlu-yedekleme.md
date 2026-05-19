@@ -7,13 +7,13 @@ referenceLabel: "donedynamics.com — Yedekleme & S3 uyumlu depolama"
 referenceUrl: "https://donedynamics.com/solutions/backup-storage"
 ---
 
-## Problem
+## Problem tanımı
 
 Müşterilerimizin çoğunda PostgreSQL yedekleme stratejisi şu şekilde başlıyor: gece bir cron, `pg_dump`, dump'ı aynı sunucudaki bir klasöre yazıyor. Sunucuda disk dolduğunda yedekler durmuş oluyor, kimse fark etmiyor; bir ransomware geldiğinde dump da şifreleniyor — çünkü yedek aslında **off-site değil**.
 
 Hedeflerimiz net: **3-2-1 kuralı** (3 kopya, 2 medya, 1 off-site), KVKK için Türkiye/AB lokasyon, müşterinin verisi bizim ellerimizde değil müşterinin S3 hesabında.
 
-## Architecture
+## Mimari
 
 ```
 ┌───────────────────┐    pg_dump --format=custom
@@ -37,7 +37,7 @@ Hedeflerimiz net: **3-2-1 kuralı** (3 kopya, 2 medya, 1 off-site), KVKK için T
 
 Üç hedef → 3-2-1 sağlandı. Restic her yedekte değişen bloklara dokunuyor; günlük yedek transfer maliyeti **birkaç MB'a** düşüyor.
 
-## Code sample
+## Kod örneği
 
 ```bash
 #!/usr/bin/env bash
@@ -74,7 +74,7 @@ fi
 
 Cron olarak `0 3 * * *` ile çalışıyor. Restore testi **ay başı 1'inde** otomatik koşuyor; başarısızsa Pushover üzerinden alarm.
 
-## Benchmark
+## Karşılaştırmalı ölçüm
 
 Üretim ortamında 80 GB ham veri, 22 müşteri tenant'ı:
 
@@ -89,7 +89,7 @@ Cron olarak `0 3 * * *` ile çalışıyor. Restore testi **ay başı 1'inde** ot
 
 Aylık restore testi tam restore: **9m 04s**. RTO hedefimiz 1 saat, gerçek değer çok altında.
 
-## Diagram
+## Akış şeması
 
 ```
 Day 0:  full snapshot  ████████████████████ 18 GB
@@ -103,7 +103,7 @@ Day 90: pruned         ✗
 
 `restic forget --prune` ile eski snapshot'lar atılıyor ama dedupe edilmiş blok hâlâ referans alıyorsa silinmiyor.
 
-## Conclusion
+## Sonuç
 
 `pg_dump` + `restic` + S3 uyumlu depo, küçük ve orta ölçekli PostgreSQL kurulumlarında **WAL-G** veya **pgBackRest**'ten çok daha az operasyonel yük getiriyor. PITR gerekmiyorsa (RPO 24 saat yeterliyse), bu yığın bizim varsayılan reçetemiz.
 

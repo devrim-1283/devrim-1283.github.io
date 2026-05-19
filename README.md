@@ -1,13 +1,25 @@
-# Done Dynamics — Engineering (GitHub Pages)
+# Done Dynamics — Engineering
 
-Backlink / engineering blog satellite site for [donedynamics.com](https://donedynamics.com), hosted free on GitHub Pages.
+Kurumsal yazılım mühendisliği notları, mimari kararlar ve sahadan ölçüm verileri.
 
-- **Stack**: Astro 4 + Tailwind + content collections (markdown)
-- **i18n**: TR (default, `/`) + EN (`/en/`)
-- **Format**: every post follows `H1 → Problem → Architecture → Code sample → Benchmark → Diagram → Conclusion → Reference link`
-- **Backlink strategy**: nav, footer, and post-end "Reference" card all link back to donedynamics.com (deep links to the relevant service page).
+[Done Dynamics](https://donedynamics.com), Alanya TEKMER bünyesinde kurulan bir kurumsal yazılım şirketidir. Web uygulamaları, mobil uygulamalar, kurumsal işbirliği platformları (Nextcloud) ve KVKK uyumlu yedekleme altyapısı üzerine çalışıyoruz. Bu depo, ekibin teknik yayın akışını barındırır.
 
-## Local dev
+## Yazı formatı
+
+Her yazı tek başlıkta tek karar sorununu ele alır ve şu yapıda ilerler:
+
+`Problem → Mimari → Kod örneği → Karşılaştırmalı ölçüm → Akış şeması → Sonuç → Referans`
+
+Referans kartı her yazının altında otomatik üretilir; [donedynamics.com](https://donedynamics.com) üzerindeki ilgili hizmet sayfasına derin link içerir.
+
+## Stack
+
+- **Astro 4** + **Tailwind** + content collections
+- Markdown gövde + Shiki syntax highlighting
+- TR (`/`) + EN (`/en/`)
+- GitHub Actions üzerinden GitHub Pages'a deploy
+
+## Lokal geliştirme
 
 ```bash
 npm install
@@ -17,28 +29,20 @@ npm run build    # ./dist
 
 ## Deploy
 
-GitHub Pages mode: **Settings → Pages → Build and deployment → Source: GitHub Actions** (not "Deploy from a branch").
-
-Push to `master` or `main` and `.github/workflows/deploy.yml` will:
+`master` veya `main` dalına push → `.github/workflows/deploy.yml` çalışır:
 
 1. `npm ci`
 2. `npm run build`
-3. upload `./dist` as a Pages artifact
-4. deploy to `https://<username>.github.io/`
+3. `./dist` Pages artifact olarak yüklenir
+4. `https://devrim-1283.github.io/` adresine deploy edilir
 
-### URL setup
+Pages konfigürasyonu: **Settings → Pages → Source: GitHub Actions**.
 
-This config targets the **root user domain**: `https://devrim-1283.github.io`.
+## Yeni yazı ekleme
 
-Repository name **must be exactly** `devrim-1283.github.io` for the root domain to work. If you put the code in a differently-named repo, switch `astro.config.mjs → site` to `https://devrim-1283.github.io/<repo-name>` and add `base: '/<repo-name>'`.
+TR yazılar: `src/content/posts/*.md` · EN yazılar: `src/content/en-posts/*.md`
 
-### Private repo
-
-Private repos can publish public Pages sites **only on GitHub Pro / Team / Enterprise**. The "This repository is private but the published site will be public" banner you see means your account already supports it. Free accounts must make the repo public.
-
-## Adding a new post
-
-TR posts live in `src/content/posts/*.md`, EN in `src/content/en-posts/*.md`. Frontmatter:
+Frontmatter şablonu:
 
 ```yaml
 ---
@@ -51,12 +55,8 @@ referenceUrl: "https://donedynamics.com/solutions/web-development"
 ---
 ```
 
-Body must use the post format (Problem → Architecture → Code sample → Benchmark → Diagram → Conclusion). The `Reference` card is rendered automatically by the layout from the frontmatter.
+Yazı gövdesi `## Problem`, `## Mimari`, `## Kod örneği`, `## Karşılaştırmalı ölçüm`, `## Akış şeması`, `## Sonuç` (EN: `Problem`, `Architecture`, `Code sample`, `Benchmark`, `Diagram`, `Conclusion`) başlıklarını içerir. Referans kartı layout tarafından üretilir.
 
-## Why this exists
+## Lisans
 
-Pure backlink farms get penalised. This site exists because:
-
-- It's a real engineering blog with original measurements,
-- Every post genuinely references the matching service page on donedynamics.com,
-- The domain authority of `github.io` is high and the dofollow links it sends to donedynamics.com are clean.
+Yazılı içerik © Done Dynamics. Kod örnekleri MIT.

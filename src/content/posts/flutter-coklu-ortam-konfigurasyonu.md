@@ -7,13 +7,13 @@ referenceLabel: "donedynamics.com — Mobil uygulama geliştirme"
 referenceUrl: "https://donedynamics.com/solutions/mobile-development"
 ---
 
-## Problem
+## Problem tanımı
 
 Yeni başlayan bir Flutter projesinde herkes aynı tuzağa düşüyor: `lib/config.dart` içinde `const apiUrl = 'https://api.dev.example.com';` satırı, ve QA'ya build verirken dosyayı elle değiştirmek. Sonuç: yanlış URL ile gönderilen TestFlight build'leri, prod API'a giden dev cihaz, müşteri ortamına sızan log mesajları.
 
 Hedef: derleme zamanında ortam seçimi, runtime'da değişmez sabitler, iOS + Android tarafında ayrı bundle ID ve isim.
 
-## Architecture
+## Mimari
 
 İki katmanlı bir yapıya yerleştik:
 
@@ -37,7 +37,7 @@ Hedef: derleme zamanında ortam seçimi, runtime'da değişmez sabitler, iOS + A
           (Runner-dev)     (productFlavors) (com.dd.app.dev)
 ```
 
-## Code sample
+## Kod örneği
 
 `env/prod.json`:
 
@@ -84,7 +84,7 @@ steps:
          --dart-define-from-file=env/${{ matrix.env }}.json
 ```
 
-## Benchmark
+## Karşılaştırmalı ölçüm
 
 Üç ortam, üç build (Apple Silicon M2, cold cache):
 
@@ -96,7 +96,7 @@ steps:
 
 `--obfuscate --split-debug-info` her zaman açık — boyut farkı yok, reverse engineering eşiği yükseliyor.
 
-## Diagram
+## Akış şeması
 
 ```
 git push origin main
@@ -117,7 +117,7 @@ git push origin main
 
 Aynı pipeline her iki ortamı paralel çıkarıyor; her ortam farklı bundle ID, farklı Firebase config, farklı analytics property kullanıyor.
 
-## Conclusion
+## Sonuç
 
 `--dart-define-from-file` Flutter 3.7+ ile geldi ve `flutter_flavorizr` gibi paket bağımlılıklarına olan ihtiyacı çoğunlukla bitirdi. Flavor + dart-define ikilisi:
 
